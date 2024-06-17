@@ -10,7 +10,7 @@ import UserNotifications
 
 class NotificationHandler {
     func askPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .provisional, .sound]) { success, error in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
                 print("permission: access granted")
             } else if let error = error {
@@ -21,10 +21,10 @@ class NotificationHandler {
     
     func sendNotification(date: Date, type: String, timeInterval: Double = 5, title: String, body: String) {
         var trigger: UNNotificationTrigger?
-        if type == "date" {
+        if type == "calendar" {
             let dateComponents = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute], from: date)
             trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-        } else if type == "time" {
+        } else if type == "timeInterval" {
             trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
         }
         

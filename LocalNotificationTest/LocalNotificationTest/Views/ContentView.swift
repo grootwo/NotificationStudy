@@ -8,12 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedDate = Date()
+    let notify = NotificationHandler()
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Spacer()
+            Button("Send a notification in 5 seconds") {
+                notify.sendNotification(date: Date(), type: "time", timeInterval: 5, title: "Time Notification", body: "This is timeinterval notification")
+            }
+            DatePicker("Pick noti time: ", selection: $selectedDate, in: Date()...)
+            Button("Send a notification at time") {
+                notify.sendNotification(date: selectedDate, type: "date", title: "Date Notification", body: "This is calendar notification")
+            }
+            Spacer()
+            Text("Not working?")
+            Button("Request permissions") {
+                notify.askPermission()
+            }
         }
         .padding()
     }

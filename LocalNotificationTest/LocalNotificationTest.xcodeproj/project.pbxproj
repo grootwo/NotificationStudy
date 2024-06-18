@@ -12,6 +12,7 @@
 		1B31B4A12C1FC007001DDC44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B31B4A02C1FC007001DDC44 /* Assets.xcassets */; };
 		1B31B4A42C1FC007001DDC44 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B31B4A32C1FC007001DDC44 /* Preview Assets.xcassets */; };
 		1B31B4AD2C1FC046001DDC44 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B31B4AC2C1FC046001DDC44 /* NotificationHandler.swift */; };
+		1BB6DDAE2C21125700C98047 /* LongPop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1BB6DDAD2C21125700C98047 /* LongPop.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		1B31B4A02C1FC007001DDC44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1B31B4A32C1FC007001DDC44 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1B31B4AC2C1FC046001DDC44 /* NotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
+		1BB6DDAD2C21125700C98047 /* LongPop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = LongPop.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 		1B31B49B2C1FC006001DDC44 /* LocalNotificationTest */ = {
 			isa = PBXGroup;
 			children = (
+				1BB6DDAD2C21125700C98047 /* LongPop.mp3 */,
 				1B31B4AB2C1FC032001DDC44 /* Hadlers */,
 				1B31B4AA2C1FC025001DDC44 /* Views */,
 				1B31B49C2C1FC006001DDC44 /* LocalNotificationTestApp.swift */,
@@ -144,6 +147,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BB6DDAE2C21125700C98047 /* LongPop.mp3 in Resources */,
 				1B31B4A42C1FC007001DDC44 /* Preview Assets.xcassets in Resources */,
 				1B31B4A12C1FC007001DDC44 /* Assets.xcassets in Resources */,
 			);

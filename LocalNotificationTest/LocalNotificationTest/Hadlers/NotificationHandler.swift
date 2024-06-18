@@ -49,7 +49,7 @@ class NotificationHandler: NSObject, ObservableObject, UNUserNotificationCenterD
         if type == "action" {
             setCategories()
             content.userInfo = ["MEETING_ID" : "meetingID", "USER_ID" : "userID" ]
-            content.categoryIdentifier = "MEETING_INVITATION"
+            content.categoryIdentifier = "BASIC_NOTIFICATION"
         }
 
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
@@ -59,22 +59,20 @@ class NotificationHandler: NSObject, ObservableObject, UNUserNotificationCenterD
     func setCategories() {
         print("set: categories")
         // Define the custom actions.
-        let acceptAction = UNNotificationAction(identifier: "ACCEPT_ACTION",
-                                                title: "Accept",
-                                                options: [])
-        let declineAction = UNNotificationAction(identifier: "DECLINE_ACTION",
-                                                 title: "Decline",
-                                                 options: [])
+        let textAction = UNNotificationAction(identifier: "TEXT_ACTION", title: "Input text with keyboard", options: [])
+        let acceptAction = UNNotificationAction(identifier: "ACCEPT_ACTION", title: "Accept", options: [])
+        let declineAction = UNNotificationAction(identifier: "DECLINE_ACTION", title: "Decline", options: [])
+
         // Define the notification type
-        let meetingInviteCategory =
-        UNNotificationCategory(identifier: "MEETING_INVITATION",
-                               actions: [acceptAction, declineAction],
+        let basicNotificationCategory =
+        UNNotificationCategory(identifier: "BASIC_NOTIFICATION",
+                               actions: [textAction, acceptAction, declineAction],
                                intentIdentifiers: [],
-                               hiddenPreviewsBodyPlaceholder: "",
+                               hiddenPreviewsBodyPlaceholder: "input text here",
                                options: .customDismissAction)
         // Register the notification type.
         let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.setNotificationCategories([meetingInviteCategory])
+        notificationCenter.setNotificationCategories([basicNotificationCategory])
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -82,30 +80,20 @@ class NotificationHandler: NSObject, ObservableObject, UNUserNotificationCenterD
                 withCompletionHandler completionHandler:
                    @escaping () -> Void) {
         print("didReceive: userNotificationCenter")
-        
-       // Get the meeting ID from the original notification.
-       let userInfo = response.notification.request.content.userInfo
             
        if response.notification.request.content.categoryIdentifier ==
-                  "MEETING_INVITATION" {
-          // Retrieve the meeting details.
-          let meetingID = userInfo["MEETING_ID"] as! String
-          let userID = userInfo["USER_ID"] as! String
-                
+                  "BASIC_NOTIFICATION" {
           switch response.actionIdentifier {
+          case "TEXT_ACTION":
+              print("didReceive: text input")
+             break
+                    
           case "ACCEPT_ACTION":
-              print("didReceive: accept")
+             print("didReceive: accept")
              break
                     
           case "DECLINE_ACTION":
-             print("didReceive: decline")
-             break
-                    
-          case UNNotificationDefaultActionIdentifier,
-               UNNotificationDismissActionIdentifier:
-             // Queue meeting-related notifications for later
-             //  if the user does not act.
-              print("didReceive: something")
+            print("didReceive: decline")
              break
                     
           default:
@@ -127,16 +115,7 @@ class NotificationHandler: NSObject, ObservableObject, UNUserNotificationCenterD
         print("willPresent: userNotificationCenter")
         
        if notification.request.content.categoryIdentifier ==
-                "MEETING_INVITATION" {
-          // Retrieve the meeting details.
-          let meetingID = notification.request.content.userInfo["MEETING_ID"] as! String
-          let userID = notification.request.content.userInfo["USER_ID"] as! String
-                
-          // Add the meeting to the queue.
-//          sharedMeetingManager.queueMeetingForDelivery(user: userID,
-//                meetingID: meetingID)
-
-
+                "BASIC_NOTIFICATION" {
           // Play a sound to let the user know about the invitation.
           completionHandler(.sound)
           return

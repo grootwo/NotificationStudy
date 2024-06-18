@@ -56,7 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				1BB6DDAD2C21125700C98047 /* LongPop.mp3 */,
-				1B31B4AB2C1FC032001DDC44 /* Hadlers */,
+				1B31B4AB2C1FC032001DDC44 /* Handlers */,
 				1B31B4AA2C1FC025001DDC44 /* Views */,
 				1B31B49C2C1FC006001DDC44 /* LocalNotificationTestApp.swift */,
 				1B31B4A02C1FC007001DDC44 /* Assets.xcassets */,
@@ -81,12 +81,12 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		1B31B4AB2C1FC032001DDC44 /* Hadlers */ = {
+		1B31B4AB2C1FC032001DDC44 /* Handlers */ = {
 			isa = PBXGroup;
 			children = (
 				1B31B4AC2C1FC046001DDC44 /* NotificationHandler.swift */,
 			);
-			path = Hadlers;
+			path = Handlers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

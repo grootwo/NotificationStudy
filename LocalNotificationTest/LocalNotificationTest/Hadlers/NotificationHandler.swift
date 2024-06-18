@@ -36,7 +36,46 @@ class NotificationHandler {
         contet.body = body
         contet.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "LongPop.mp3"))
         
+        if type == "action" {
+            trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
+            let content = UNMutableNotificationContent()
+            content.title = "Weekly Staff Meeting"
+            content.body = "Every Tuesday at 2pm"
+            content.userInfo = ["MEETING_ID" : "meetingID",
+                                "USER_ID" : "userID" ]
+            content.categoryIdentifier = "MEETING_INVITATION"
+        }
+        
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: contet, trigger: trigger)
         UNUserNotificationCenter.current().add(request)
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+           didReceive response: UNNotificationResponse,
+           withCompletionHandler completionHandler:
+             @escaping () -> Void) {
+           
+       // Get the meeting ID from the original notification.
+       let userInfo = response.notification.request.content.userInfo
+       let meetingID = userInfo["MEETING_ID"] as! String
+       let userID = userInfo["USER_ID"] as! String
+            
+       // Perform the task associated with the action.
+       switch response.actionIdentifier {
+       case "ACCEPT_ACTION":
+          print("action: acccept")
+          break
+            
+       case "DECLINE_ACTION":
+          print("action: decline")
+          break
+            
+       // Handle other actions...
+       default:
+          break
+       }
+        
+       // Always call the completion handler when done.
+       completionHandler()
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selectedTime = Date()
-    let notify = NotificationHandler()
+    let notify = NotificationHandler.instance
     
     var body: some View {
         VStack {

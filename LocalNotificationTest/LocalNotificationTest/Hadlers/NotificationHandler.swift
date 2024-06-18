@@ -9,6 +9,14 @@ import Foundation
 import UserNotifications
 
 class NotificationHandler: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
+    // UNUserNotificationCenter의 delegate로 NotificationHandler를 지정해줘야 UNUserNotificationCenterDelegate에서 요구한 메서드들이 작동함.
+    static let instance = NotificationHandler()
+    
+    private override init() {
+        super.init()
+        UNUserNotificationCenter.current().delegate = self
+    }
+    
     func askPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
@@ -21,7 +29,6 @@ class NotificationHandler: NSObject, ObservableObject, UNUserNotificationCenterD
     
     func sendNotification(date: Date, type: String, timeInterval: Double = 5, title: String, body: String) {
         var trigger: UNNotificationTrigger?
-        setCategories()
         
         if type == "calendar" {
             let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: date)
@@ -31,24 +38,21 @@ class NotificationHandler: NSObject, ObservableObject, UNUserNotificationCenterD
         } else if type == "repeat" {
             let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: date)
             trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        } else if type == "action" {
+            trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
         }
         
-        let contet = UNMutableNotificationContent()
-        contet.title = title
-        contet.body = body
-        contet.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "LongPop.mp3"))
-        
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "LongPop.mp3"))
         if type == "action" {
-            trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
-            let content = UNMutableNotificationContent()
-            content.title = "Weekly Staff Meeting"
-            content.body = "Every Tuesday at 2pm"
-            content.userInfo = ["MEETING_ID" : "meetingID",
-                                "USER_ID" : "userID" ]
+            setCategories()
+            content.userInfo = ["MEETING_ID" : "meetingID", "USER_ID" : "userID" ]
             content.categoryIdentifier = "MEETING_INVITATION"
         }
-        
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: contet, trigger: trigger)
+
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request)
     }
     

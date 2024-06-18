@@ -28,23 +28,7 @@ struct ContentView: View {
             }
             .buttonStyle(.bordered)
             Button("Send a notification with actions") {
-                // Define the custom actions.
-                let acceptAction = UNNotificationAction(identifier: "ACCEPT_ACTION",
-                      title: "Accept",
-                      options: [])
-                let declineAction = UNNotificationAction(identifier: "DECLINE_ACTION",
-                      title: "Decline",
-                      options: [])
-                // Define the notification type
-                let meetingInviteCategory =
-                      UNNotificationCategory(identifier: "MEETING_INVITATION",
-                      actions: [acceptAction, declineAction],
-                      intentIdentifiers: [],
-                      hiddenPreviewsBodyPlaceholder: "",
-                      options: .customDismissAction)
-                // Register the notification type.
-                let notificationCenter = UNUserNotificationCenter.current()
-                    notify.sendNotification(date: Date(), type: "action", timeInterval: 5, title: "Action Notification", body: "This is timeinterval notification with action")
+                notify.sendNotification(date: Date(), type: "action", timeInterval: 5, title: "Action Notification", body: "This is timeinterval notification with action")
             }
             .buttonStyle(.bordered)
             Spacer()

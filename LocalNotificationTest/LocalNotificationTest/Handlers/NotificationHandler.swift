@@ -63,7 +63,7 @@ class NotificationHandler: NSObject, ObservableObject, UNUserNotificationCenterD
     func setCategories() {
         print("set: categories")
         // Define the custom actions
-        let textAction = UNTextInputNotificationAction(identifier: "TEXT_ACTION", title: "Input text with keyboard", options: [])
+        let textAction = UNTextInputNotificationAction(identifier: "TEXT_ACTION", title: "Input text input with keyboard", options: [], textInputButtonTitle: "Submit", textInputPlaceholder: "Write anything...")
         let acceptAction = UNNotificationAction(identifier: "ACCEPT_ACTION", title: "Accept", options: [])
         let declineAction = UNNotificationAction(identifier: "DECLINE_ACTION", title: "Decline", options: [])
 
